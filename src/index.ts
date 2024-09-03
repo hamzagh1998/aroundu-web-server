@@ -1,15 +1,25 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
+import admin from "firebase-admin";
 
-import { dbConnect } from "./db/db-connect";
 import { configuration } from "./config";
 
-dotenv.config();
+import { dbConnect } from "./db/db-connect";
 
-const PORT = configuration.port;
+import { firebaseAuth } from "./middlewares/firebase-auth";
+
+import { authRouter } from "./controllers/auth/auth.router";
 
 const app = express();
+
+const PORT = +configuration.port;
+
+const firebaseConfig = configuration.firebaseAppConfig;
+admin.initializeApp({
+  credential: admin.credential.cert(firebaseConfig as admin.ServiceAccount),
+});
+
+dbConnect(configuration.databaseURL);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -18,7 +28,8 @@ if (process.env.NODE_ENV === "development") {
   app.use(require("morgan")("dev"));
 }
 
-dbConnect(configuration.databaseURL);
+// Routes
+app.use("/api/auth", firebaseAuth, authRouter);
 
 app.get("/", (_, res) => res.json({ Status: "Healthy!" }));
 

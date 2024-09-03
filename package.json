@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "NODE_ENV=production node dist/index.js",
-    "dev": "NODE_ENV=development nodemon --watch src -e ts --exec ts-node src/index.ts"
+    "watch": "NODE_ENV=development nodemon --watch src -e ts --exec ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,7 +23,8 @@
     "mongoose": "^8.6.0",
     "morgan": "^1.10.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
