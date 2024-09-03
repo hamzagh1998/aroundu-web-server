@@ -4,9 +4,16 @@ type User = {
   firstName: string;
   lastName: string;
   email: string;
-  plan: string;
+  plan: "free" | "premium";
   photoURL: string;
-  location: string;
+  location: {
+    city: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+  };
+  friends: Schema.Types.ObjectId[];
+  messages: Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date | null;
 };
@@ -31,10 +38,25 @@ const UserSchema = new Schema<UserDocument>({
     type: String,
     required: true,
   },
+  location: {
+    type: Object,
+    required: false,
+  },
   plan: {
     type: String,
     required: true,
     default: "free",
+    enum: ["free", "premium"],
+  },
+  friends: {
+    type: [Schema.Types.ObjectId],
+    required: false,
+    ref: "User",
+  },
+  messages: {
+    type: [Schema.Types.ObjectId],
+    required: false,
+    ref: "Message",
   },
   createdAt: {
     type: Date,
