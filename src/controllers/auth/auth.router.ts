@@ -21,7 +21,15 @@ authRouter.post("/signup", async (req, res) => {
   const payload = result.data;
   const authResult = await authService.register(payload);
 
-  res.status(authResult.status).json({ detail: authResult.detail });
+  res.status(authResult.status).json(authResult.detail);
 });
 
-authRouter.post("/user-data", (req, res) => {});
+authRouter.get("/user-data", async (req, res) => {
+  console.log(req.body.user);
+
+  const userDataResult = await authService.getUserData(
+    req.body.user.email ? req.body.user.email : req.body.user.user_id
+  );
+
+  res.status(userDataResult.status).json(userDataResult.detail);
+});

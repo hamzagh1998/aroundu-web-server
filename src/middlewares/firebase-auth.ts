@@ -26,6 +26,7 @@ export async function firebaseAuth(
       .status(500)
       .json({ error: true, detail: "Internal server error!" });
   } else if (decodeValue) {
+    req.body.user = decodeValue;
     return next();
   } else {
     return res.status(401).json({ error: true, detail: "Unauthorized!" });

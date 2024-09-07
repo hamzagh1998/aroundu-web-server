@@ -11,8 +11,8 @@ type User = {
     country: string;
     latitude: number;
     longitude: number;
-  };
-  friends: Schema.Types.ObjectId[];
+  } | null;
+  connections: Schema.Types.ObjectId[];
   messages: Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date | null;
@@ -41,6 +41,7 @@ const UserSchema = new Schema<UserDocument>({
   location: {
     type: Object,
     required: false,
+    default: null,
   },
   plan: {
     type: String,
@@ -48,7 +49,7 @@ const UserSchema = new Schema<UserDocument>({
     default: "free",
     enum: ["free", "premium"],
   },
-  friends: {
+  connections: {
     type: [Schema.Types.ObjectId],
     required: false,
     ref: "User",
