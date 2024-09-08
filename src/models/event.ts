@@ -8,8 +8,7 @@ type Event = {
   startDate: Date;
   endDate: Date;
   location: {
-    city: string;
-    country: string;
+    address: string;
     latitude: number;
     longitude: number;
   };

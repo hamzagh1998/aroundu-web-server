@@ -7,8 +7,7 @@ type User = {
   plan: "free" | "premium";
   photoURL: string;
   location: {
-    city: string;
-    country: string;
+    address: string;
     latitude: number;
     longitude: number;
   } | null;

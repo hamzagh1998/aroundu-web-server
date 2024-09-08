@@ -7,8 +7,7 @@ export const RegisterUserSchema = z.object({
   photoURL: z.string().url("Invalid URL").optional(),
   location: z
     .object({
-      city: z.string().min(1, "City is required"),
-      country: z.string().min(1, "Country is required"),
+      address: z.string().min(6, "Address is required"),
       latitude: z
         .number()
         .min(-90, "Latitude must be between -90 and 90")
