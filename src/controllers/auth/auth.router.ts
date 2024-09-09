@@ -8,28 +8,26 @@ export const authRouter = Router();
 
 const authService = new AuthService();
 
-authRouter.post("/signup", async (req, res) => {
-  const result = RegisterUserSchema.safeParse(req.body);
+authRouter
+  .post("/signup", async (req, res) => {
+    const result = RegisterUserSchema.safeParse(req.body);
 
-  if (!result.success) {
-    return res.status(400).json({
-      error: "Invalid request data",
-      details: result.error.errors,
-    });
-  }
+    if (!result.success) {
+      return res.status(400).json({
+        error: "Invalid request data",
+        details: result.error.errors,
+      });
+    }
 
-  const payload = result.data;
-  const authResult = await authService.register(payload);
+    const payload = result.data;
+    const authResult = await authService.register(payload);
 
-  res.status(authResult.status).json(authResult.detail);
-});
+    res.status(authResult.status).json(authResult.detail);
+  })
+  .get("/user-data", async (req, res) => {
+    const userDataResult = await authService.getUserData(
+      req.body.user.email ? req.body.user.email : req.body.user.user_id
+    );
 
-authRouter.get("/user-data", async (req, res) => {
-  console.log(req.body.user);
-
-  const userDataResult = await authService.getUserData(
-    req.body.user.email ? req.body.user.email : req.body.user.user_id
-  );
-
-  res.status(userDataResult.status).json(userDataResult.detail);
-});
+    res.status(userDataResult.status).json(userDataResult.detail);
+  });

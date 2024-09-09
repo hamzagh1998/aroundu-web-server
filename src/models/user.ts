@@ -11,6 +11,7 @@ type User = {
     latitude: number;
     longitude: number;
   } | null;
+  isOnboarded: boolean;
   connections: Schema.Types.ObjectId[];
   messages: Schema.Types.ObjectId[];
   createdAt: Date;
@@ -41,6 +42,11 @@ const UserSchema = new Schema<UserDocument>({
     type: Object,
     required: false,
     default: null,
+  },
+  isOnboarded: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   plan: {
     type: String,
