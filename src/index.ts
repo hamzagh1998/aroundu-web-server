@@ -9,6 +9,7 @@ import { dbConnect } from "./db/db-connect";
 import { firebaseAuth } from "./middlewares/firebase-auth";
 
 import { authRouter } from "./controllers/auth/auth.router";
+import { profileRouter } from "./controllers/profile/profile.router";
 
 const app = express();
 
@@ -30,6 +31,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Routes
 app.use("/api/auth", firebaseAuth, authRouter);
+app.use("/api/profile", firebaseAuth, profileRouter);
 
 app.get("/", (_, res) => res.json({ Status: "Healthy!" }));
 

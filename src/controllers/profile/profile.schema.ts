@@ -18,6 +18,8 @@ export const UpdateUserProfileSchema = z.object({
         .max(180, "Longitude must be between -180 and 180"),
     })
     .optional(),
+  isOnboarded: z.boolean().optional(),
+  currentEmail: z.string().min(5, "Invalid email address").optional(),
 });
 
 export type UpdateUserPayload = z.infer<typeof UpdateUserProfileSchema>;

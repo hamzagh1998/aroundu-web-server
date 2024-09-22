@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const RegisterUserSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().min(5, "Invalid email address"),
+  firstName: z.string().min(1, "First name is required").optional(),
+  lastName: z.string().min(1, "Last name is required").optional(),
+  email: z.string().min(5, "Invalid email address").optional(),
   photoURL: z.string().url("Invalid URL").optional(),
   location: z
     .object({

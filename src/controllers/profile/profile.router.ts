@@ -2,9 +2,13 @@ import { Router } from "express";
 
 import { UpdateUserProfileSchema } from "./profile.schema";
 
-const profileRouter = Router();
+import { ProfileService } from "./profile.service";
 
-profileRouter.patch("/update-profile", (req, res) => {
+export const profileRouter = Router();
+
+const profileService = new ProfileService();
+
+profileRouter.patch("/update-profile", async (req, res) => {
   const result = UpdateUserProfileSchema.safeParse(req.body);
 
   if (!result.success) {
@@ -15,9 +19,12 @@ profileRouter.patch("/update-profile", (req, res) => {
   }
 
   const payload = result.data;
-  console.log(payload);
-
-  res.json({
-    message: "Profile route",
+  const profileResult = await profileService.updateProfile({
+    ...payload,
+    currentEmail: req.body.user.email
+      ? req.body.user.email
+      : req.body.user.user_id,
   });
+
+  res.status(profileResult.status).json(profileResult.detail);
 });
